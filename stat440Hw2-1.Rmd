@@ -9,7 +9,7 @@ length=c(75,85,91.6,95,NA,105.5,106)
 mean(length) #mean function shows NA. 
 Tb=c(0,0,1,NA,0,0,0)
 ```
-
+l;k;lm;l
 2.
 ```{r}
 farm=c("MO","MO","MO","MO","LN","SE","QM")

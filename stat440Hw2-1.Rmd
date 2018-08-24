@@ -1,0 +1,116 @@
+title: "stat440Hw2"
+author: "oksang yoo"
+date: "Jan/26/2018"
+
+##Chapter2
+1.
+```{r cars}
+length=c(75,85,91.6,95,NA,105.5,106)
+mean(length) #mean function shows NA. 
+Tb=c(0,0,1,NA,0,0,0)
+```
+
+2.
+```{r}
+farm=c("MO","MO","MO","MO","LN","SE","QM")
+month=c(11,7,7,"NA",9,9,11)
+Boar=cbind(length,Tb,month)
+dim(Boar)
+nrow(Boar)
+ncol(Boar) #There are 7 animals and 3 variables.
+```
+
+5.
+```{r}
+a=data.frame(month,length,Tb)
+a=data.frame(sqrt(month),sqrt(length),sqrt(Tb))
+#All elements of a data frame are vectors
+```
+
+6.
+```{r}
+setwd("//win.pass.psu.edu/oxy5007/Downloads")
+r=read.table(file="ISIT.txt",header=TRUE)
+attach(r)
+s=scan(file="ISIT.txt",skip=1)
+is.matrix(s)
+is.matrix(r)
+is.data.frame(s)
+is.data.frame(r)
+#r is a vector, but s is not. 
+```
+
+##Chapter3
+2.
+```{r}
+dim(r)
+#There are 789 observations and 14 variables.
+summary(SampleDepth[Station=="1"])
+summary(SampleDepth[Station=="2"])
+summary(SampleDepth[Station=="3"])
+length(SampleDepth[Station=="1"])
+length(SampleDepth[Station=="2"])
+length(SampleDepth[Station=="3"])  #length indicates number ob observations.
+
+factorr=factor(Station)
+summary(factorr)  #4 and 5 are considerably small.
+newr=subset(r,Station>5 | Station<4) #remove station 4, 5.
+dim(newr) #we can check if 4, 5 are removed through the number of observations.
+
+newrr=subset(r, Year ==2002 | Month==4 &  BottomDepth>2000)
+stl=newrr[order(newrr$BottomDepth),]   #data according to measured depth.
+newrrr=subset(r,  Month==4 &  BottomDepth>2000) #This is data in April and depth is greater than 2000.
+
+```
+
+
+Written Hw 1
+C)
+```{r}
+sim=function(x){
+x=runif(n)
+lambda=sqrt(2)
+return(sqrt(-log(1-x)*2*lambda^2))
+}
+n=1000
+X1=sim(x=n)
+hist(X1,breaks = 25, freq = FALSE)
+
+sim2=function(x){
+rate=sqrt(2)
+return(x*exp(-x^2/(2*rate^2))/rate^2)
+}
+X2=seq(from=0,to=5,by=0.1)
+lines(X2,sim2(X2))
+        
+```
+D)
+```{r}
+X2=seq(from=0,to=5,by=0.1)
+plot(X2,3.2*dexp(X2,rate = 1))
+lines(X2,sim2(X2))
+```
+3g(x) can roughly cover f(x). we can choose 
+c=3.2
+
+
+```{r}
+n=0
+iteration=0
+sample=c()
+while (n<1000){
+  y=rexp(1,rate = 1)
+  c=3.2
+  p=sim2(y)/(dexp(y,rate=1)*c)
+  if (runif(1)<p) {
+    sample=c(sample, y)
+    n=n+1
+  }
+  iteration=iteration+1
+}
+iteration
+hist(sample,breaks = 25, freq = FALSE)
+```
+the total is 3249 iterations.
+
+
